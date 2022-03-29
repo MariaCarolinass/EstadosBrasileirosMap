@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import static mapasjava.Municipio.pesquisarMunicipios;
 import static mapasjava.Municipio.pesquisarPopulacao;
+import static mapasjava.Municipio.pesquisarPorte;
 
 public class Principal {
 
@@ -16,8 +17,12 @@ public class Principal {
         System.out.println("Dados do Munícipio");
         pesquisarMunicipios("RO", "Cabixi", dados);
         System.out.print("------------------------------------------\n");
+        
         System.out.println("Dados da População");
         pesquisarPopulacao("RO", dados);
+        
+        System.out.print("------------------------------------------\n");
+        pesquisarPorte("RO", dados);
     }
     
 }

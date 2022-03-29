@@ -1,5 +1,6 @@
 package mapasjava;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Municipio {
@@ -63,6 +64,32 @@ public class Municipio {
         
         System.out.println("- A população total de "+estado+" é de: "+total);
         return total;
+        
+    }
+    
+    // Encontrar o porte de um estado e somar por tipo
+    public static void pesquisarPorte(String estado, 
+            Map <String, ArrayList<Municipio>> dados) {
+        
+        Map <String, Integer> porte = new HashMap<>();
+        ArrayList<Municipio> lista = dados.get(estado);
+        
+        for (Municipio i: lista) {
+            
+            if (!porte.containsKey(i.getPorte())){
+                porte.put(i.getPorte(), 0);
+            } 
+            
+            porte.put(i.getPorte(), porte.get(i.getPorte()) + 1);
+            
+        }
+        
+        System.out.println("Dados do porte no estado de "+estado);
+        porte.entrySet().forEach(entry -> {
+            String key = entry.getKey();
+            Integer value = entry.getValue();   
+            System.out.println("- "+key+" tem: "+value+" porte(s)");
+        });
         
     }
 
