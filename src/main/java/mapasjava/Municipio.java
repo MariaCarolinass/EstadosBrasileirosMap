@@ -22,8 +22,8 @@ public class Municipio {
         this.capital = capital;
     }
     
-    // Encontrar os dados de um munícipio
-    public static void pesquisarMunicipios(String estado, String municipio,
+    
+    public static void pesquisarMunicipio(String estado, String municipio,
             Map <String, ArrayList<Municipio>> dados) {
         
         ArrayList<Municipio> lista = dados.get(estado);
@@ -33,16 +33,20 @@ public class Municipio {
             return;
         }
         
-        for (Municipio i: lista) {
+        for (Municipio muni: lista) {
             
-            if (i.getEstado().equals(estado) && i.getMunicipio().equals(municipio)) {
-                System.out.println("- Estado: " + i.getEstado());
-                System.out.println("- Munícipio: " + i.getMunicipio());
-                System.out.println("- Região: " + i.getRegiao());
-                System.out.println("- População: " + i.getPopulacao());
-                System.out.println("- Porte: " + i.getPorte());
-                System.out.println("- Capital: " + i.getCapitalString());
+            // informações do munícipio
+            if (muni.getEstado().equals(estado) && muni.getMunicipio(
+                    ).equals(municipio)) {
+                
+                System.out.println("- Estado: " + muni.getEstado());
+                System.out.println("- Munícipio: " + muni.getMunicipio());
+                System.out.println("- Região: " + muni.getRegiao());
+                System.out.println("- População: " + muni.getPopulacao());
+                System.out.println("- Porte: " + muni.getPorte());
+                System.out.println("- Capital: " + muni.getCapitalString());
                 return;
+                
             }
             
         }
@@ -51,15 +55,17 @@ public class Municipio {
         
     }
     
-    // Encontrar toda a população de um estado e mostrar o total
-    public static int pesquisarPopulacao(String estado,
+    
+    public static int calcularPopulacaoEstado(String estado,
             Map <String, ArrayList<Municipio>> dados) {
         
         ArrayList<Municipio> lista = dados.get(estado);
         
         Integer total = 0;
-        for (Municipio i: lista) {
-            total += i.getPopulacao();
+        
+        // Soma o total da população do estado
+        for (Municipio muni: lista) {
+            total += muni.getPopulacao();
         } 
         
         System.out.println("- A população total de "+estado+" é de: "+total);
@@ -67,73 +73,81 @@ public class Municipio {
         
     }
     
-    // Encontrar cada porte do estado e retornar o total de cada tipo usando mapa
-    // Calcular a média da população de cada munícipio por tipo de porte
-    public static void pesquisarPorte(String estado, 
+    
+    public static void calcularPorteMunicipio(String estado, 
             Map <String, ArrayList<Municipio>> dados) {
         
         Map <String, Integer> porte = new HashMap<>();
         ArrayList<Municipio> lista = dados.get(estado);
         
-        for (Municipio i: lista) {
+        // Soma a quantidade total que cada munícipio tem de porte 
+        for (Municipio muni: lista) {
             
-            if (!porte.containsKey(i.getPorte())){
-                porte.put(i.getPorte(), 0);
+            // Verifica se a lista é vazia
+            if (!porte.containsKey(muni.getPorte())){
+                porte.put(muni.getPorte(), 0);
             } 
             
-            porte.put(i.getPorte(), porte.get(i.getPorte()) + 1);
+            // Adiciona os valores no mapa e soma o total de porte
+            porte.put(muni.getPorte(), porte.get(muni.getPorte()) + 1);
             
         }
         
-        System.out.println("Dados do porte no estado de "+estado);
-        System.out.println();
         porte.entrySet().forEach(entry -> {
             String key = entry.getKey();
             Integer value = entry.getValue();
-            System.out.println("- "+key+" tem: "+value+" porte(s)");
+            System.out.println("- Porte "+key+" tem: "+value+" porte(s)");
         });
         
     }
     
-    // Encontrar cada porte do estado e retornar o total de cada tipo usando mapa
-    // Calcular a média da população de cada munícipio por tipo de porte
-    public static void pesquisarPopMediaPorte(String estado, 
+    
+    public static void calcularPopulacaoPorte(String estado, 
             Map <String, ArrayList<Municipio>> dados) {
         
         Map <String, int[]> porte = new HashMap<>();
-        
         ArrayList<Municipio> lista = dados.get(estado);
         
-        for (Municipio m: lista) {
+        // Adiciona os dados do porte em um vetor no mapa
+        for (Municipio muni: lista) {
             
-            int vetorPorte [] = porte.get(m.getPorte());
-            
-            
+            int vetorPorte [] = porte.get(muni.getPorte());
+           
+            // Se o vetor for nulo, será criado um vetor com duas posições
             if (vetorPorte == null){
                 vetorPorte = new int[2];
-                porte.put(m.getPorte(), vetorPorte);
+                porte.put(muni.getPorte(), vetorPorte);
             } 
             
-            vetorPorte[0] += m.getPopulacao();
+            // A posição 0 do vetor retorna o total da população de cada porte
+            vetorPorte[0] += muni.getPopulacao();
+            
+            // A posição 1 do vetor soma a quantidade total de cada porte
             vetorPorte[1]++;        
             
         }
         
         porte.entrySet().forEach(entry -> {
+            
             String key = entry.getKey();
             int[] value = entry.getValue();
+            
+            // Caso a posição 1 seja 0, atribuir o valor 1 
             if (value[1] == 0) {
                 value[1] = 1;
             }
+            
+            // Calcula a média da população de cada porte
             Integer mediaPopulacao = value[0] / value[1];
-            System.out.println("- A média da população com "+key+" é: "+mediaPopulacao);
+            System.out.println("- A média da população com porte "+key+
+                    " é de: "+mediaPopulacao);
+        
         });
         
     }
     
-    // Encontrar cada porte do estado e retornar o total de cada tipo usando lista
-    // Calcular a média da população de cada munícipio por tipo de porte
-    public static void pesquisarPorteLista(String estado,
+    
+    public static void retornarDadosPorteLista(String estado,
             Map <String, ArrayList<Municipio>> dados) {
         
         ArrayList<Municipio> lista = dados.get(estado);
@@ -150,6 +164,7 @@ public class Municipio {
         Integer contarPopulacaoGrande = 0;
         Integer contarPopulacaoMetropole = 0;
         
+        // Soma a quantidade total de cada porte e de população por porte
         for (Municipio i: lista) {
         
             if ("Pequeno I".equals(i.getPorte())) {
@@ -187,50 +202,57 @@ public class Municipio {
             
         }
 
-        System.out.println("Dados do porte no estado de "+estado+"\n");
-        System.out.println("- Pequeno I tem: "+pequenoI+" porte(s)");
-        System.out.println("- Pequeno II tem: "+pequenoII+" porte(s)");
-        System.out.println("- Médio tem: "+medio+" porte(s)");
-        System.out.println("- Grande tem: "+grande+" porte(s)");
-        System.out.println("- Metrópoles tem: "+metropole+" porte(s)");
-        System.out.println();
+        System.out.println("- Porte pequeno I tem: "+pequenoI+" porte(s)");
+        System.out.println("- Porte pequeno II tem: "+pequenoII+" porte(s)");
+        System.out.println("- Porte médio tem: "+medio+" porte(s)");
+        System.out.println("- Porte grande tem: "+grande+" porte(s)");
+        System.out.println("- Porte metrópoles tem: "+metropole+" porte(s)");
         
+        // Verifica se a quantidade total de cada porte é maior que 0
+        // Se sim, é feito o calculo da média da população por porte
+        // Se não, retorna a mensagem que o porte não teve média de população
         if (pequenoI > 0) {
             Integer mediaPequenoI = contarPopulacaoPequenoI / pequenoI;
-            System.out.println("- A média da população com porte pequeno I é: "+mediaPequenoI);
+            System.out.println("- A média da população com porte pequeno I é "
+                    + "de: "+mediaPequenoI);
         } else {
-            System.out.println("- A população com porte pequeno I não teve média");
+            System.out.println("- O porte pequeno I não teve média de população");
         }
         
         if (pequenoII > 0) {
             Integer mediaPequenoII = contarPopulacaoPequenoII / pequenoII;
-            System.out.println("- A média da população com porte pequeno II é: "+mediaPequenoII);
+            System.out.println("- A média da população com porte pequeno II é "
+                    + "de: "+mediaPequenoII);
         } else {
-            System.out.println("- A população com porte pequeno II não teve média");
+            System.out.println("- O porte pequeno II não teve média de população");
         }
         
         if (medio > 0) {
             Integer mediaMedio = contarPopulacaoMedio / medio;
-            System.out.println("- A média da população com porte médio é: "+mediaMedio);
+            System.out.println("- A média da população com porte médio é "
+                    + "de: "+mediaMedio);
         } else {
-            System.out.println("- A população com porte médio não teve média");
+            System.out.println("- O porte médio não teve média de população");
         } 
         
         if (grande > 0) {
             Integer mediaGrande = contarPopulacaoGrande / grande;
-            System.out.println("- A média da população com porte grande é: "+mediaGrande);
+            System.out.println("- A média da população com porte grande é "
+                    + "de: "+mediaGrande);
         } else {
-            System.out.println("- A população com porte grande não teve média");
+            System.out.println("- O porte grande não teve média de população");
         }
         
         if (metropole > 0) {
             Integer mediaMetropole = contarPopulacaoMetropole / metropole;
-            System.out.println("- A média da população com porte metropóle é: "+mediaMetropole);
+            System.out.println("- A média da população com porte metropóle é "
+                    + "de: "+mediaMetropole);
         } else {
-            System.out.println("- A população com porte metrópole não teve média");
+            System.out.println("- O porte metrópole não teve média de população");
         }
         
     }
+    
 
     public String getEstado() {
         return estado;
