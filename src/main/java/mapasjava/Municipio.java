@@ -74,7 +74,7 @@ public class Municipio {
         
         Map <String, Integer> porte = new HashMap<>();
         ArrayList<Municipio> lista = dados.get(estado);
-      
+        
         for (Municipio i: lista) {
             
             if (!porte.containsKey(i.getPorte())){
@@ -82,7 +82,7 @@ public class Municipio {
             } 
             
             porte.put(i.getPorte(), porte.get(i.getPorte()) + 1);
-        
+            
         }
         
         System.out.println("Dados do porte no estado de "+estado);
@@ -91,6 +91,42 @@ public class Municipio {
             String key = entry.getKey();
             Integer value = entry.getValue();
             System.out.println("- "+key+" tem: "+value+" porte(s)");
+        });
+        
+    }
+    
+    // Encontrar cada porte do estado e retornar o total de cada tipo usando mapa
+    // Calcular a média da população de cada munícipio por tipo de porte
+    public static void pesquisarPopMediaPorte(String estado, 
+            Map <String, ArrayList<Municipio>> dados) {
+        
+        Map <String, int[]> porte = new HashMap<>();
+        
+        ArrayList<Municipio> lista = dados.get(estado);
+        
+        for (Municipio m: lista) {
+            
+            int vetorPorte [] = porte.get(m.getPorte());
+            
+            
+            if (vetorPorte == null){
+                vetorPorte = new int[2];
+                porte.put(m.getPorte(), vetorPorte);
+            } 
+            
+            vetorPorte[0] += m.getPopulacao();
+            vetorPorte[1]++;        
+            
+        }
+        
+        porte.entrySet().forEach(entry -> {
+            String key = entry.getKey();
+            int[] value = entry.getValue();
+            if (value[1] == 0) {
+                value[1] = 1;
+            }
+            Integer mediaPopulacao = value[0] / value[1];
+            System.out.println("- A média da população com "+key+" é: "+mediaPopulacao);
         });
         
     }
