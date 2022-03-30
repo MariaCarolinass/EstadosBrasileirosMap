@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import static mapasjava.Municipio.pesquisarMunicipios;
+import static mapasjava.Municipio.pesquisarPopMediaPorte;
 import static mapasjava.Municipio.pesquisarPopulacao;
 import static mapasjava.Municipio.pesquisarPorte;
 import static mapasjava.Municipio.pesquisarPorteLista;
@@ -26,6 +27,8 @@ public class Principal {
         
         System.out.println("------------------------------------------");
         pesquisarPorte("RO", dados);
+        System.out.println();
+        pesquisarPopMediaPorte("RO", dados);
         
         System.out.println("------------------------------------------");
         pesquisarPorteLista("RO", dados);
