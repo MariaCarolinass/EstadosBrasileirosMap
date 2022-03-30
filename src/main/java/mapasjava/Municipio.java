@@ -2,7 +2,7 @@ package mapasjava;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
+        
 public class Municipio {
     
     private String estado;
@@ -90,6 +90,51 @@ public class Municipio {
             Integer value = entry.getValue();   
             System.out.println("- "+key+" tem: "+value+" porte(s)");
         });
+        
+    }
+    
+    // Encontrar o porte de um estado e somar por tipo usando lista
+    public static void pesquisarPorteLista(String estado,
+            Map <String, ArrayList<Municipio>> dados) {
+        
+        ArrayList<Municipio> lista = dados.get(estado);
+        
+        Integer pequenoI = 0;
+        Integer pequenoII = 0;
+        Integer medio = 0;
+        Integer grande = 0;
+        Integer metropole = 0;
+        
+        for (Municipio i: lista) {
+            
+            /*if ("Pequeno I".equals(i.getPorte())) {
+               pequenoI++;
+            } if ("Pequeno II".equals(i.getPorte())) {
+               pequenoII++;
+            } if ("Médio".equals(i.getPorte())) {
+               medio++;
+            } if ("Grande".equals(i.getPorte())) {
+               grande++;
+            } if ("Metrópole".equals(i.getPorte())) {
+               metropole++;
+            }*/
+            
+            switch (i.getPorte()) {
+                case "Pequeno I" -> pequenoI++;
+                case "Pequeno II" -> pequenoII++;
+                case "Médio" -> medio++;
+                case "Grande" -> grande++;
+                case "Metrópole" -> metropole++;
+            }
+            
+        }
+        
+        System.out.println("Dados do porte no estado de "+estado);
+        System.out.println("- Pequeno I tem: "+pequenoI+" porte(s)");
+        System.out.println("- Pequeno II tem: "+pequenoII+" porte(s)");
+        System.out.println("- Médio tem: "+medio+" porte(s)");
+        System.out.println("- Grande tem: "+grande+" porte(s)");
+        System.out.println("- Metrópoles tem: "+metropole+" porte(s)");
         
     }
 

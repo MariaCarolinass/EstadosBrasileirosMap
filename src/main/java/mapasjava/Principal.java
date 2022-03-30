@@ -6,6 +6,7 @@ import java.util.Map;
 import static mapasjava.Municipio.pesquisarMunicipios;
 import static mapasjava.Municipio.pesquisarPopulacao;
 import static mapasjava.Municipio.pesquisarPorte;
+//import static mapasjava.Municipio.pesquisarPorteLista;
 
 public class Principal {
 
@@ -16,13 +17,16 @@ public class Principal {
         Map <String, ArrayList<Municipio>> dados = CSV.leitura(path);
         System.out.println("Dados do Munícipio");
         pesquisarMunicipios("RO", "Cabixi", dados);
-        System.out.print("------------------------------------------\n");
+        System.out.println("------------------------------------------");
         
         System.out.println("Dados da População");
         pesquisarPopulacao("RO", dados);
         
-        System.out.print("------------------------------------------\n");
+        System.out.println("------------------------------------------");
         pesquisarPorte("RO", dados);
+        
+        //System.out.println("------------------------------------------");
+        //pesquisarPorteLista("RO", dados);
     }
     
 }
